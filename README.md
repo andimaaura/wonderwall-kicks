@@ -3,30 +3,41 @@
 # Link Website & Repository
 
 Website sudah di deploy melalui PWS dan dapat diakses melalui:
+
 [(https://andi-maura-wonderwallkicks.pbp.cs.ui.ac.id/)]
+
 Kemudian berikut merupakan link repository dari projek Wonderwall Kicks:
+
 [https://github.com/andimaaura/wonderwall-kicks]
 
 
 # Penjelasan step-by-step pengimplementasian checklist
 
 1) Membuat projek django baru
+
         Sebelum membuat proyek, saya memastikan bahwa Python dan Django sudah terinstall di dalam komputer. Kemudian sesuai dengan yang dipelajari pada Tutorial 0, saya membuat virtual environment supaya paket Django dan dependensi lain tidak tercampur dengan sistem utama. Menggunakan perintah
-        # python -m venv env
-        # env\Scripts\activate
+
+        python -m venv env
+
+        env\Scripts\activate
 
         Kemudian saya mendownload beberapa komponen atau modul yang diperlukan, selanjutnya setelah terdownload saya membuat projek baru Django dengan perintah
-        # django-admin startproject wonderwall_kicks .
+
+        django-admin startproject wonderwall_kicks .
+
         Setelahnya django akan otomatis membuat struktur folder dengan file penting seperti settings.py, urls.py, manage.py, dan lain-lain. Kemudian saya akan membuat file .env dan .env.prod yang digunakan untuk menaruh kredensial database kemudian saya juga mengubah beberapa file file penting.
 
         Setelahnya saya mengecek apakah proyek berjalan dengan baik dengan mengetes menjalankan server lokal dengan perintah
-        # python manage.py runserver
+
+        python manage.py runserver
 
         Selanjutnya saya mengunggah proyek repositori saya ke Github sesuai dengan tutorial 0, saya juga menambahkan file gitignore agar file file yang sensitif tidak ikut di push ke repositori github
 
 2)  Membuat aplikasi dengan nama main pada proyek tersebut.
+
        Setelah projek django berhasil dibuat, aplikasi akan dibuat dengan perintah
-       # python manage.py startapp main
+       
+       python manage.py startapp main
 
        Folder main nantinya akan berisi file-file penting seperti models.py, views.py, urls.py, dan lain-lain.
 
@@ -35,21 +46,25 @@ Kemudian berikut merupakan link repository dari projek Wonderwall Kicks:
        
 
 3) Melakukan routing agar aplikasi main dapat dijalankan
+
         Saya menghubungkan routing main di urls.py proyek utama menggunakan include('main.urls') agar halaman utama bisa diakses melalui browser
 
 
 4) Membuat model Product di aplikasi main    
+
         Langkah berikutnya ialah mendefinisikan model Product di models.py. Terdapat beberapa atribut yang wajib ada yakni: name, price, description, thumbnail, category, dan is_featured. Kemudian saya menambahkan atribut opsional yakni stock agar data produk lebih lengkap.
 
         Setelah model dibuat, maka harus dilakukan migrasi database. Dengan menjalankan perintah:
 
-        # python manage.py makemigrations
-        # python manage.py migrate
+        python manage.py makemigrations
+        python manage.py migrate
 
 5) Membuat fungsi di views.py
+
         Saya menambahkan fungsi show_main di views.py yang berfungsi untuk menampilkan nama aplikasi, nama saya, kelas saya, serta npm saya. Fungsi ini mengambil request dari cliend, kemudian menyiapkan data konteks yang nantinya akan dikirim ke template serta mengembalikan response HTML. Tidak lupa saya membuat template HTML didalam folder templates, serta menuliskan template agar dapat menampilkan aplikasi sederhana
 
 6) Membuat sebuah routing pada urls.py aplikasi main untuk memetakan fungsi yang telah dibuat di views.py
+
         Kemudian saya membuat urls.py di folder main untuk memetakan URL ke fungsi show_main di views.py
 
         Dengan begitu ketika pengguna mengakses URL tsb, Django akan memanggil fungsi show_main dan menampilkan halaman yang sesuai
@@ -59,15 +74,17 @@ Kemudian berikut merupakan link repository dari projek Wonderwall Kicks:
         Setelah aplikasi Django selesai dibuat dan diuji melalui server lokal, saya melalukan deployment ke Pacil Web Service agar aplikasi dapat diakses melalui Internet. Dengan langkah-langkah yang sama seperti di tutorial 0 dan saya juga memastikan environment variable di proyek PWS sudah tersimpan baik
 
         Selanjutnya setiap ada perubahan, saya menyimpan seluruh perubahan ke GitHub dan PWS. Dengan cara:
-        # git add .
-        # git commit -m "Complete tutorial 1: Django MVT implementation"
-        # git push origin master
-        # git push pws master
+
+        git add .
+        git commit -m "Complete tutorial 1: Django MVT implementation"
+        git push origin master
+        git push pws master
 
 
 # Bagan Hubungan Request Client ke web berbasis aplikadi Django
 
         Berikut merupakan bagan yang sudah saya buat, saya sajikan dalam bentuk link
+
         [https://image2url.com/images/1757237825274-315bbb4f-4af0-417f-a652-aa325f5107a7.png]
 
 # Peran settings.py dalam proyek Django
@@ -77,12 +94,15 @@ Kemudian berikut merupakan link repository dari projek Wonderwall Kicks:
 # Bagaimana cara kerja migrasi database di Django
 
         Migrasi sendiri merupakan cara Django mencocokkan struktur database dengan model yang telah dibuat di python. Misal kita punya model Product dengan kolom price dan stock. Migrasi inilah yang harus dilakukan agar di database tabel product punya kolom yang sesuai. Proses migrasi dilakukan apabila kita mengubah model di kode Python, dengan menjalankan perintah
-        # python manage.py makemigrations
+
+        python manage.py makemigrations
 
         Nantinya perintah ini akan membaca seluruh perubahan di model dan membuat file migrasi di folder migrations/. Jadi file ini berfungsi sebagai instruksi yang menyuruh database untuk mengubah tabel. Jadi baru bersifat perencanaan saja belum benar-benar diubah
 
         Kemudian setelah itu menjalankan perintah:
-        # python manage.py migrate
+
+        python manage.py migrate
+
         Saat perintah nya dijalankan, Django akan mulai membaca file migrasi tadi dan langsung melakukan perubahan pada database. Dia hanya membuat perubahan yang dipelrukan tanpa perlu merusak data lain. Sehingga kita tidak perlu membuat tabel manual dengan SQL
 
 # Menurut Anda, dari semua framework yang ada, mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak?
