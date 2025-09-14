@@ -34,6 +34,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "andi-maura-wonderwallkicks.pbp.cs.ui.ac.id"]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://andi-maura-wonderwallkicks.pbp.cs.ui.ac.id"
+]
+
 
 # Application definition
 
@@ -57,12 +61,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'football_news.urls'
+ROOT_URLCONF = 'wonderwall_kicks.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,7 +78,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'football_news.wsgi.application'
+WSGI_APPLICATION = 'wonderwall_kicks.wsgi.application'
 
 
 # Database
