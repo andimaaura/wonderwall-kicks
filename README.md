@@ -11,104 +11,57 @@ Kemudian berikut merupakan link repository dari projek Wonderwall Kicks:
 [https://github.com/andimaaura/wonderwall-kicks]
 
 
-# Penjelasan step-by-step pengimplementasian checklist
+# Mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
 
-1) Membuat projek django baru
+Pada pengimplementasian sebuah platform, umumnya memerlukan komunikasi dengan sistem lain dengan memberikan data kepada pengguna dalam format tertentu. Hal tersebutlah yang membuat data delivery dibutuhkan dalam pengimplementasian sebuah platform. Dengan adanya data delivery, sebuah platform dapat mengirimkan data informasi yang diperlukan client (aplikasi mobile, web, dll) secara terstruktur da konsisten. Apabila tidak ada sistem data delivery yang baik, maka pengiriman informasi akan sulit untuk dilakukan serta rentan untuk menimbulkan berbagai kesalahan. Oleh karena itu, kita memerlukan data delivery dalam proses pengimplementasian platform
 
-        Sebelum membuat proyek, saya memastikan bahwa Python dan Django sudah terinstall di dalam komputer. Kemudian sesuai dengan yang dipelajari pada Tutorial 0, saya membuat virtual environment supaya paket Django dan dependensi lain tidak tercampur dengan sistem utama. Menggunakan perintah
+# Menurutmu mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
 
-        python -m venv env
+JSON seringkali dianggap lebih unggul dibanding XML karena JSON memiliki sintaks yang sederhana, lebih ringkas, dan mudah difahami oleh manusia. JSON juga langsung kompatibel dengan javascript sehingga banyak digunakan dalam proyek aplikasi web.  Di sisi lain, XML juga memiliki kelebihan. XML mendukung skema yang lebih kompleks dan memungkinkan representasi data yang lebih terstruktur dengan atribut tambahan. Akan tetapi, XML memiliki kekurangan utama yakni strukturnya yang sangat panjang, sehingga ukuran data lebih besar dan lebih sulit dibaca dengan JSON. Oleh karena itu, menurut saya lebih baik JSON dibanding XML
 
-        env\Scripts\activate
-
-        Kemudian saya mendownload beberapa komponen atau modul yang diperlukan, selanjutnya setelah terdownload saya membuat projek baru Django dengan perintah
-
-        django-admin startproject wonderwall_kicks .
-
-        Setelahnya django akan otomatis membuat struktur folder dengan file penting seperti settings.py, urls.py, manage.py, dan lain-lain. Kemudian saya akan membuat file .env dan .env.prod yang digunakan untuk menaruh kredensial database kemudian saya juga mengubah beberapa file file penting.
-
-        Setelahnya saya mengecek apakah proyek berjalan dengan baik dengan mengetes menjalankan server lokal dengan perintah
-
-        python manage.py runserver
-
-        Selanjutnya saya mengunggah proyek repositori saya ke Github sesuai dengan tutorial 0, saya juga menambahkan file gitignore agar file file yang sensitif tidak ikut di push ke repositori github
-
-2)  Membuat aplikasi dengan nama main pada proyek tersebut.
-
-       Setelah projek django berhasil dibuat, aplikasi akan dibuat dengan perintah
-       
-       python manage.py startapp main
-
-       Folder main nantinya akan berisi file-file penting seperti models.py, views.py, urls.py, dan lain-lain.
-
-       Selanjutnya main ini akan ditambahkan pada INSTALLED_APS di settings.py yang berada pada direkotri utama agar django dapat mengenali aplikasi baru ini.
-
-       
-
-3) Melakukan routing agar aplikasi main dapat dijalankan
-
-        Saya menghubungkan routing main di urls.py proyek utama menggunakan include('main.urls') agar halaman utama bisa diakses melalui browser
+JSON lebih populer dan meningkat pesat karena beberapa keunggulan JSON dibanding XML, seperti keefisiensian JSON yang tidak perlu menggunakan banyak tag seperti XML. Selain itu, sintaks JSON jauh lebih mudah dipahami, karena sintaks JSON menyerupai objek dalam bahasa pemrograman. Kemduian, JSON juga berintergrasi dengan JavaScript sehingga dapat mempermudah proses pengembangan aplikasi berbasis web. 
 
 
-4) Membuat model Product di aplikasi main    
+# Jelaskan fungsi dari method is_valid pada form Django dan memgapa kita membutuhkan method tersebut?
 
-        Langkah berikutnya ialah mendefinisikan model Product di models.py. Terdapat beberapa atribut yang wajib ada yakni: name, price, description, thumbnail, category, dan is_featured. Kemudian saya menambahkan atribut opsional yakni stock agar data produk lebih lengkap.
+Method is_valid() pada form Django berfungsi untuk melakukan validasi data yang masuk melalui sebuah form. Variasinya meliputi mengecel apakah semua required field sudah terisi, mengecek apakah format datanya sudah sesuai, atau mengecek apakah aturan khusus yang berjalan kalau udah kaya untuk beebrapa hasil, is_valid() mengeluarkan output True. Kalau ada kesalahan bakal keluar False sampai bener sendriri. Tanpa method ini, data yang masuk bisa tidak sesuai dan dapat menyebabkan error saat data sedang digunakan atau mengakibatkan kerentanan keamanan. 
 
-        Setelah model dibuat, maka harus dilakukan migrasi database. Dengan menjalankan perintah:
+#  Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
 
-        python manage.py makemigrations
-        python manage.py migrate
+csrf_token merupakan suatu sistem keamanan yang berfungsi untuk melindungi aplikasi dari serangan Cross-Site Request Forgery. Serangan CSRF merupakan serangan dimana penyerang memanfaatkan sesi login pengguna yang sedangaktif untuk melakukan tindakan berbahaya tanpa sepengetahuan pengguna. Penyerang dapat membuat halaman palsu yang mengirimkan permintaan ke server dengan memanfaatkan session user yang sedang login. Akibatnya, hal-hal berbahaya seperti perubahan data, penghapusan, atau transaksi dapat terjadi tanpa sepengetahuan dan izin pengguna. Melalui csrf_token, Django dapat memverifikasi apakah permintaan tersebut berasal dari form aplikasi, sehingga dapat mencegah serangan CSRF.
 
-5) Membuat fungsi di views.py
+# Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 
-        Saya menambahkan fungsi show_main di views.py yang berfungsi untuk menampilkan nama aplikasi, nama saya, kelas saya, serta npm saya. Fungsi ini mengambil request dari cliend, kemudian menyiapkan data konteks yang nantinya akan dikirim ke template serta mengembalikan response HTML. Tidak lupa saya membuat template HTML didalam folder templates, serta menuliskan template agar dapat menampilkan aplikasi sederhana
+Berikut merupakan tahapan saya dalam mengimplementasikan checklist
 
-6) Membuat sebuah routing pada urls.py aplikasi main untuk memetakan fungsi yang telah dibuat di views.py
+1) Membuat views untuk data delivery
 
-        Kemudian saya membuat urls.py di folder main untuk memetakan URL ke fungsi show_main di views.py
+Saya menambahkan 4 fungsi views yang dapat mengembalikan data saya melalui format XML, JSON, XML berdasarkan ID, dan JSON berdasarkan ID. Saya menggunakan Django serializers yang dapat otomatis mengubah queryset dari model menjadi representasi data dalam bentuk format tertentu. Fungsi fungsi tersebut berguna untuk mengambil seluruh data model dan mengubahnya ke format yang telah ditentukan. Dengan adanya fungsi ini, sistem saya sudah memiliki kemampuan untuk mengirimkan data kepada client dengan format yang berbeda-beda
 
-        Dengan begitu ketika pengguna mengakses URL tsb, Django akan memanggil fungsi show_main dan menampilkan halaman yang sesuai
+2) Menambahkan routing URL
 
-7)  Melakukan deployment ke PWS terhadap aplikasi yang sudah dibuat sehingga nantinya dapat diakses oleh teman-temanmu melalui Internet.
+Setelah membuat fungsi fungsi views tersebut, saya menambahhkan fungsi konfigurasi URL, agar fungsi views tersebut dapat diakses baik melalui brwser maupun tools seperti Postman. Pada files urls.py saya menambahkan path() yang mengubungkan masing masing view ke endpoint yang jelas misalnya, /xml/, /json/, dan seterusnya. Hal ini penting agar setiap endpoint memiliki jalur akses yang konsisten. Kemudian saya juga memastikan setiap path diberi nama sehingga bisa lebih mudah dipanggil dalam template apabila diperlukan.
 
-        Setelah aplikasi Django selesai dibuat dan diuji melalui server lokal, saya melalukan deployment ke Pacil Web Service agar aplikasi dapat diakses melalui Internet. Dengan langkah-langkah yang sama seperti di tutorial 0 dan saya juga memastikan environment variable di proyek PWS sudah tersimpan baik
+3) Membuat halaman utama (list page)
 
-        Selanjutnya setiap ada perubahan, saya menyimpan seluruh perubahan ke GitHub dan PWS. Dengan cara:
+Saya membuat template HTML yang dapat menapilkan seluruh objek dalam bentuk tabel. Pada setiap data saya telah memberikan tombol Detail agar pengguna dapat mengakses halaman Detail tiap-tiap produk berdasarkan ID. Saya juga menambahkan tombol Add pada halaman tersebut agar user/admin dapat menambahkan produk baru pada web. Halaman list ini berfungsi sebagai sarana atau wadah utama untuk mengakses seluruh fitur yang telah dibuat.
 
-        git add .
-        git commit -m "Complete tutorial 1: Django MVT implementation"
-        git push origin master
-        git push pws master
+4) Membuat halaman form
+
+Kemudian saya membuat halaman form yang dengan memanfaatkan Django Forms. Saya membuat file forms.py. Pada tombol submit add form, data yang masuk akan diperiksa dengan is_valid(). Jika data valid, maka data akan lanjut disimpan ke database, apabila tidak maka akan mengeluarkan pesan error. Hal ini bertujuan agar proses penambahan data berjalan aman, konsisten, dan terstruktur.
+
+5) Membuat halaman detail dari tiap produk
+
+Halaman ini dihubungkan melalaui button Detail yang ada pada list page. Saat ditekan, maka penggunaa akan diarahkan ke URL sesuai dengan ID objek dan kemudian views akan mengambil data berdasarkan ID tersebut. Template ehalama detail menunjukkan seluruh data informasi lengkap yang telah dipilih. Dengan begitu seluruh objek daat dilihat lebih spesifik bukan sekadar list umum.
+
+# Screenshot request POSTMAN dengan method GET
+
+1) XML
+https://image2url.com/images/1758063617634-1758a061-db30-4fa7-853c-481e0445c8c4.png
+
+2) JSON
+https://image2url.com/images/1758063736775-d3111c74-06d7-4645-9c9c-39abda07164d.png
 
 
-# Bagan Hubungan Request Client ke web berbasis aplikadi Django
+Demikian jawaban saya mengenai pertanyaan-pertanyaan pada Tugas 3. Sekian, dan terimakasih banyak Kakak Asdos.
 
-        Berikut merupakan bagan yang sudah saya buat, saya sajikan dalam bentuk link
-
-        [https://image2url.com/images/1757237825274-315bbb4f-4af0-417f-a652-aa325f5107a7.png]
-
-# Peran settings.py dalam proyek Django
-        
-        Dalam proyek Django, settings.py merupakan file yang berisi konfigurasi utama untuk proyek. Semua pengaturan penting yang mengatur proses Django berjalan ada disini. settings.py berfungsi untuk konfigurasi database, seperti menentukan jenis database yang digunakan, atau mengatur nama database, password, host, port, dan lain-lain. Kemudian di settings.py juga merupakan tempat menentukan aplikasi Django/aplikasi lain yang akan digunakan dalam proyek, nantinya Django akan otomatis memuat aplikasi saat menjalankan server. Selain itu settings.py juga berperan sebagai middleware atau "petugas jaga" buat request dan response, contoh seperti autentikasi, settings.py harus mengecek apakah user sudah login atau belum, dan lain-lain.
-
-# Bagaimana cara kerja migrasi database di Django
-
-        Migrasi sendiri merupakan cara Django mencocokkan struktur database dengan model yang telah dibuat di python. Misal kita punya model Product dengan kolom price dan stock. Migrasi inilah yang harus dilakukan agar di database tabel product punya kolom yang sesuai. Proses migrasi dilakukan apabila kita mengubah model di kode Python, dengan menjalankan perintah
-
-        python manage.py makemigrations
-
-        Nantinya perintah ini akan membaca seluruh perubahan di model dan membuat file migrasi di folder migrations/. Jadi file ini berfungsi sebagai instruksi yang menyuruh database untuk mengubah tabel. Jadi baru bersifat perencanaan saja belum benar-benar diubah
-
-        Kemudian setelah itu menjalankan perintah:
-
-        python manage.py migrate
-
-        Saat perintah nya dijalankan, Django akan mulai membaca file migrasi tadi dan langsung melakukan perubahan pada database. Dia hanya membuat perubahan yang dipelrukan tanpa perlu merusak data lain. Sehingga kita tidak perlu membuat tabel manual dengan SQL
-
-# Menurut Anda, dari semua framework yang ada, mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak?
-
-        Django sering dipilih sebagai saran abelajar pengembangan software pertama karena Django sangat lengkap dan otomatis. Banyak hal-hal yang biasanya sangat sulit sudah disediakan pada Django seperti pengaturan database, routing URL, autentikasi, dll. Hal ini membuat pemula dapat belajar jauh lebih lancar. Selain itu, Django sudah memiliki banyak fitur bawaan sehingga kita sebagai pemula bisa membuat website yang lengkap hanya dengan sedikit kode. Kemudian, Django mempunyai struktur yang jelas serta konsisten, seluruh file dan folduer memiliki tempat masing-masing. Dan Django juga sangat familiar dikalangan para programmer sehingga banyak dokumentasi serta tutorial yang dapat dipelajari sehingga dapat mencari banyak forum apabila kebingungan
-
-# Apakah ada feedback untuk asisten dosen tutorial 1 yang telah kamu kerjakan sebelumnya?
-
-        Tutorial 1 sangat jelas dan terstruktur. Tutorial 1 sangat membantu untuk memahami alur kerja Django dari model, view, hingga template. Contoh kode yang diberikan pada web juga sangat membantu untuk memperdalam pemahaman. Secara keseluruhan tutorial ini sangat membantu untuk memahami dasar Django, praktik MVT, dan unit testing
