@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Product(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True) # tambahkan ini
+    user = models.ForeignKey(User, on_delete=models.CASCADE) # tambahkan ini
     CATEGORY_CHOICES = [
         ('jersey', 'Jersey'),
         ('sepatu', 'Sepatu'),
