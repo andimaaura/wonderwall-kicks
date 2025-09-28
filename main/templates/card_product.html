@@ -3,7 +3,7 @@
   <!-- Thumbnail -->
   <div class="aspect-[16/9] relative overflow-hidden">
     {% if product.thumbnail %}
-      <img src="{{ product.thumbnail }}" alt="{{ product.title }}" class="w-full h-full object-cover">
+      <img src="{{ product.thumbnail }}" alt="{{ product.name }}" class="w-full h-full object-cover">
     {% else %}
       <div class="w-full h-full bg-gray-200"></div>
     {% endif %}
@@ -17,7 +17,7 @@
 
     <!-- Status Badges -->
     <div class="absolute top-3 right-3 flex space-x-2">
-      {% if products.is_featured %}
+      {% if product.is_featured %}
         <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
           Featured
         </span>
@@ -28,16 +28,16 @@
   <!-- Content -->
   <div class="p-5">
     <div class="flex items-center text-sm text-gray-500 mb-3">
-      <time datetime="{{ products.created_at|date:'c' }}">
+      <time datetime="{{ product.created_at|date:'c' }}">
         {{ product.created_at|date:"M j, Y" }}
       </time>
       <span class="mx-2">•</span>
-      <span>{{ product.products_views }} views</span>
+      <span>{{ product.product_views }} views</span>
     </div>
 
     <h3 class="text-lg font-semibold text-gray-900 mb-3 line-clamp-2 leading-tight">
       <a href="{% url 'main:show_product' product.id %}" class="hover:text-green-600 transition-colors">
-        {{ product.title }}
+        {{ product.name }}
       </a>
     </h3>
 
