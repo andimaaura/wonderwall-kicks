@@ -48,7 +48,7 @@
     {% else %}
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for product in products %}
-          {% include 'card_product.html' with products=products %}
+          {% include 'card_product.html' with product=product %}
         {% endfor %}
       </div>
     {% endif %}
