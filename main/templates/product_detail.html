@@ -60,6 +60,12 @@
                         {{ product.description }}
                     </div>
                 </div>
+                <div class="bg-gray-100 rounded-lg p-4 inline-block">
+                    <p class="text-lg text-gray-500">Price</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-green-600">
+                        Rp {{ product.price|intcomma }}
+                    </p>
+                </div>
             </div>
 
             <!-- Author Info -->
