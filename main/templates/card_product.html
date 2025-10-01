@@ -1,71 +1,84 @@
 {% load static %}
-<article class="bg-white rounded-lg border border-gray-200 hover:shadow-lg transition-shadow duration-300 overflow-hidden">
-  <!-- Thumbnail -->
-  <div class="aspect-[16/9] relative overflow-hidden">
+
+<article class="group relative bg-white rounded-2x1 border border-gray-200 overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition">
+  <!-- MEDIA -->
+  <a href="{% url 'main:show_product' product.id %}" class="block relative aspect-video overflow-hidden">
     {% if product.thumbnail %}
-      <img src="{{ product.thumbnail }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+      <img src="{{ product.thumbnail }}" alt="{{ product.name }}"
+           class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]">
     {% else %}
-      <div class="w-full h-full bg-gray-200"></div>
+      <div class="w-full h-full grid place-content-center bg-gradient-to-br from-gray-100 to-gray-200">
+        <svg class="w-12 h-12 opacity-40" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5Zm4 9 3-3 3 4 2-2 4 5H7Z"/></svg>
+      </div>
     {% endif %}
 
-    <!-- Category Badge -->
-    <div class="absolute top-3 left-3">
-      <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-green-600 text-white">
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/45 to-transparent"></div>
+
+    <div class="absolute left-3 bottom-3 flex items-center gap-2 z-10">
+      <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-600 text-white shadow">
         {{ product.get_category_display }}
       </span>
     </div>
+    {% if product.is_featured %}
+      <span class="absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 ring-1 ring-yellow-300/60">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.802 2.036a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.802-2.036a1 1 0 0 0-1.176 0l-2.802 2.036c-.784.57-1.838-.197-1.54-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.88 8.72c-.784-.57-.38-1.81.588-1.81H6.93a1 1 0 0 0 .95-.69l1.17-3.292Z"/></svg>
+        Featured
+      </span>
+    {% endif %}
+  </a>
 
-    <!-- Status Badges -->
-    <div class="absolute top-3 right-3 flex space-x-2">
-      {% if product.is_featured %}
-        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
-          Featured
-        </span>
-      {% endif %}
-    </div>
-  </div>
-
-  <!-- Content -->
+  <!-- BODY -->
   <div class="p-5">
-    <div class="flex items-center text-sm text-gray-500 mb-3">
-      <time datetime="{{ product.created_at|date:'c' }}">
+    <div class="flex flex-wrap items-center gap-2 text-xs text-gray-500 mb-2">
+      <time datetime="{{ product.created_at|date:'c' }}" class="inline-flex items-center gap-1">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2v2H5a2 2 0 0 0-2 2v1h18V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7Zm14 7H3v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9Z"/></svg>
         {{ product.created_at|date:"M j, Y" }}
       </time>
-      <span class="mx-2">•</span>
-      <span>{{ product.product_views }} views</span>
+      <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+      <span class="inline-flex items-center gap-1">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5c5.523 0 10 4.477 10 7s-4.477 7-10 7S2 14.523 2 12s4.477-7 10-7Zm0 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>
+        {{ product.product_views }} views
+      </span>
     </div>
 
-    <h3 class="text-lg font-semibold text-gray-900 mb-3 line-clamp-2 leading-tight">
-      <a href="{% url 'main:show_product' product.id %}" class="hover:text-green-600 transition-colors">
+    <h3 class="text-[1.075rem] font-semibold leading-snug text-gray-900 mb-1 line-clamp-2">
+      <a href="{% url 'main:show_product' product.id %}" class="hover:text-emerald-600 transition-colors">
         {{ product.name }}
       </a>
     </h3>
 
-    <p class="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4">
-      {{ product.description|truncatewords:20 }}
+    <p class="text-sm text-gray-600 line-clamp-3 mb-4">
+      {{ product.description|truncatewords:22 }}
     </p>
 
-    <!-- Action Buttons -->
-    {% if user.is_authenticated and product.user == user %}
-      <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-        <a href="{% url 'main:show_product' product.id %}" class="text-green-600 hover:text-green-700 font-medium text-sm transition-colors">
-          Read more
-        </a>
-        <div class="flex space-x-2">
-          <a href="{% url 'main:edit_product' product.id %}" class="text-gray-600 hover:text-gray-700 text-sm transition-colors">
+    <!-- ACTION BAR -->
+    <div class="flex items-center justify-between gap-2 pt-4 border-t border-gray-100">
+      <a href="{% url 'main:show_product' product.id %}"
+         class="inline-flex items-center justify-center px-3.5 py-2 text-sm font-medium rounded-full bg-emerald-600 text-white hover:bg-emerald-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition">
+        Read more
+      </a>
+
+      {% if user.is_authenticated and product.user == user %}
+        <div class="flex items-center gap-2">
+          <a href="{% url 'main:edit_product' product.id %}"
+             class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold rounded-full border border-gray-300 text-gray-800 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition"
+             aria-label="Edit {{ product.name }}">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25ZM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83Z"/></svg>
             Edit
           </a>
-          <a href="{% url 'main:delete_product' product.id %}" class="text-red-600 hover:text-red-700 text-sm transition-colors">
-            Delete
-          </a>
+
+          <!-- Delete -->
+          <form method="post" action="{% url 'main:delete_product' product.id %}">
+            {% csrf_token %}
+            <button type="submit"
+              class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold rounded-full border border-red-200 text-red-700 hover:bg-red-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400 transition"
+              aria-label="Delete {{ product.name }}">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M9 3h6a1 1 0 0 1 1 1v1h4v2H4V5h4V4a1 1 0 0 1 1-1Zm-4 6h14l-1 11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 9Z"/></svg>
+              Delete
+            </button>
+          </form>
         </div>
-      </div>
-    {% else %}
-      <div class="pt-4 border-t border-gray-100">
-        <a href="{% url 'main:show_product' product.id %}" class="text-green-600 hover:text-green-700 font-medium text-sm transition-colors">
-          Read more →
-        </a>
-      </div>
-    {% endif %}
+      {% endif %}
+    </div>
   </div>
 </article>
